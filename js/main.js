@@ -14,7 +14,8 @@ window.onload = function(){
 function mouseFunc(e){
     x = (e.clientX - window.innerWidth / 2);
     y = (e.clientY - window.innerHeight / 2);
-    figures.style.transform = "translate("+ (mx/15) +"px," + (my/15) +"px)";
+    
+    figures.style.transform = "translate("+ (mx/-15) +"px," + (my/-15) +"px)";
 }
 
 function loop(){

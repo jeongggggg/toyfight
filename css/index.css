@@ -14,8 +14,8 @@
 
 @font-face {
     font-family: 'Ginger Bold';
-    src: url(/font/Ginger.ttf) format('ttf'),
-        url(/font/Ginger.woff) format('woff');
+    src: url(/toyfight/font/Ginger.ttf) format('ttf'),
+        url(/toyfight/font/Ginger.woff) format('woff');
     font-weight: bold;
 }
 
@@ -30,6 +30,7 @@
 body{
     font-size: 16px;
     margin: 0;
+    background-color: #1544c0;
 }
 
 ul{
@@ -83,7 +84,7 @@ a{
 
     header{
         width:  -webkit-fill-available;
-        padding: 2.5vw;
+        padding: 2vw 2.5vw;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -115,7 +116,6 @@ a{
 
 /* ---------------------- nav ---------------------- */
 
-
     nav ul{
         display: flex;
     }
@@ -140,7 +140,7 @@ a{
         content: "";
         width: 0;
         height: 3px;
-        background-image: url(/toyfight/img/wiggle.svg);
+        background-image: url(/toyfight/img/jeong/wiggle.svg);
         position: absolute;
         left: 34%;
         bottom: -7px;
@@ -155,7 +155,7 @@ a{
         content: "";
         width: 32%;
         height: 3px;
-        background-image: url(/toyfight/img/wiggle.svg);
+        background-image: url(/toyfight/img/jeong/wiggle.svg);
         position: absolute;
         left: 50%;
         bottom: -7px;
@@ -168,14 +168,14 @@ a{
 
 .page_bg{
     width: 100%;
-    height: 100vh;
+    min-height: 100%;
     background: url("/toyfight/img/horizon-intro.jpg") no-repeat center center/cover;
     z-index: -1;
     transition: 0.75s;
 }
 
 .page_bg[data-active="off"]{
-    opacity: 0;
+    background: #1544c0;
 }
 
 .page_tit{
@@ -183,12 +183,9 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
     z-index: 0;
     transition: 0.75s;
+    z-index: -1;
 }
 
 
@@ -208,6 +205,7 @@ a{
 
 .tit span{
     color: #96ffca;
+    opacity: 0;
 }
 
 
@@ -216,12 +214,12 @@ a{
 
 .sec01{
     width: 100%;
-    height: 100%;
     transition: 0.75s;
 }
 
 .sec01[data-active="off"]{
     opacity: 0;
+    background: #1544c0;
 }
 
 .figure_mover{
@@ -229,6 +227,7 @@ a{
     transform-origin: center center;
     will-change: transform;
     transition: 0.75s;
+    z-index: 9;
 }
 
 
@@ -257,9 +256,104 @@ a{
     background-image: url(/toyfight/img/js-figure-2.png);
 }
 
+.scroll_arrow_wrap{
+    width: 50px;
+    height: 40px;
+    margin: -20px 0 0 -25px;
+    bottom: 3%;
+    left: 50%;
+    -webkit-transition: 0.19s linear;
+    -moz-transition: 0.19s linear;
+    transition: 0.19s linear;
+    z-index: 3;
+}
+
+.scroll_arrow{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    width: 20px;
+    height: 2px;
+    margin: -1px 0 0 -10px;
+}
+
+.scroll_arrow span::before{
+    content: '';
+    width: 50%;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: skewY(22deg);
+    transform-origin: 50% 100%;
+    -webkit-transform: skewY(22deg);
+}
+
+.scroll_arrow span::after{
+    content: '';
+    width: 50%;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: skewY(-22deg);
+    -webkit-transform: skewY(-22deg);
+}
+
+
 
 /* ---------------------- sec02 ---------------------- */
 
 .sec02{
     height: 100vh;
+    background: #1544c0;
+    text-align: center;
 }
+
+.tit_box{
+    opacity: 0;
+    transition: 0.75s;
+    transform: translateY(20%);
+}
+
+.tit_box span{
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: -0.32px;
+    color: #fff;
+    line-height: 27.2px;
+}
+
+.tit_box span:first-child{
+    font-size: 11px;
+    letter-spacing: 1.32px;
+    display: inline-block;
+    padding-bottom: 15px;
+    position: relative;
+}
+
+.tit_box span:first-child:after{
+    content: "";
+    width: 24px;
+    height: 7px;
+    background-color: #96ffca;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) skewY(-16deg) scaleX(1);
+    -webkit-transform: translateX(-50%) skewY(-16deg) scaleX(1);
+}
+
+.tit_box h2{
+    font-size: 42px;
+    font-weight: bold;
+    letter-spacing: -1.68px;
+    color: #fff;
+    margin-bottom: 0.5em;
+}
+
+
+/* ---------------------- sec03 ---------------------- */

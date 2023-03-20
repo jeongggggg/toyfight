@@ -3,7 +3,7 @@ jQuery(function ($) {
     *
     * Powered by MUSIGN  
     * Version 1.0
-    * js/musign.js 
+    * js/jeong.js 
     * reference: https://toyfight.co/
     * 
     ====================================================================== */
@@ -26,34 +26,30 @@ jQuery(function ($) {
 
     function init(loadonce) {
 
+         // nav action
+         $(window).scroll(function(){
+            var sTop = $(window).scrollTop();
+    
+            if(sTop >= 200){
+                navEnd()
+            }
+    
+            else{
+                navStart()
+            }
+        })
 
-        // only MAIN
-        if ($('body').hasClass('home')) {}
-
-        // only ABOUT US
-        if ($('body').hasClass('about')) {}
-        
-
-        // First load
-        if (typeof loadonce !== 'undefined' && loadonce === true) {
-            // >=2nd load
-        } else {
-            initOnload();
-        }
-
-        $(window).trigger('resize');
-
-        //mouseMove
+        // main img action
         mouseMovement(0.08);
 
-        // smoothscroll 적용 시 사용  scrollYPos = (smoothScrollActive ? smoothScroll.vars.current : window.pageYOffset);
+        // titactive
+        titleActive();
 
-        //titScroll
-        sectionFix();
+        // sec01 scroll action
+        sec01Scroll();
 
-        //nav
-        navStart();
-        navAction();
+        // sec02 scroll action
+        sec02Scroll();
     }
 
 
@@ -65,9 +61,13 @@ jQuery(function ($) {
 
 
     // INITIALIZE LOAD
-    function initOnload() {}
+    
+    function initOnload(){
+        sizeHandler();
+        navStart();
+    }
 
-    $(window).on('load', function () {});
+    $(window).on('load', initOnload);
 
 
     /* ======================================================================
@@ -99,8 +99,67 @@ jQuery(function ($) {
     * 
     ====================================================================== */
 
-    // bg_mouseover
-    function mouseMovement(moveAmount) {
+
+    /* -------------- NAV ACTION -------------- */
+
+    function navStart(){
+        let navStart = document.querySelectorAll('nav li')
+
+        navStart.forEach(function(textanimation,index){
+            gsap.to(textanimation,1,{
+                delay:(index + 1) * .15,
+                opacity:1,
+                y : 0
+            })
+        })
+    }
+
+    function navEnd(){
+        let navEnd = document.querySelectorAll('nav li');
+
+        navEnd.forEach(function(textanimation,index){
+            gsap.to(textanimation,1,{
+                delay:(index + 1) * .15,
+                y : -100
+            })
+        })
+    }
+    
+
+    /* -------------- DATA ACTION -------------- */
+
+    function dataActiveOff(e) {
+        e.attr('data-active', 'off');
+    }
+
+    function dataActiveOn(e) {
+        e.attr('data-active', 'on');
+    }
+
+    /* -------------- SIZE INIT -------------- */
+
+    function sizeHandler() {
+        windowWidth = $(window).innerWidth();
+        windowHeight = $(window).innerHeight();
+        halfWindowWidth = windowWidth / 2;
+        halfWindowHeight = windowHeight / 2;
+    
+        $('.js-full-height').each(function() {
+              $(this).css({
+                'height' : windowHeight
+            });
+        });
+    }
+
+
+    /* ======================================================================
+    *
+    *  Other Functions
+    * 
+    ====================================================================== */
+
+     // MAIN - background mouseover
+     function mouseMovement(moveAmount) {
         $(".sec01").mousemove(function(e) {
 
             let cursorX = e.pageX;
@@ -130,94 +189,64 @@ jQuery(function ($) {
         });
     }
 
-    function scrollQuery(y) {
+    // MAIN - title opacity
+    function titleActive(){
+        let titleActive = document.querySelectorAll('.tit span')
 
-        let windowHeight = $(window).height();
-        let jsFiguresWrap = $('.figure_mover');
-
-
-        if (y >= windowHeight*0.15) {
-            dataActiveOff(jsFiguresWrap);
-            dataActiveOff($('header nav'));
-            dataActiveOff($('.scroll_arrow_wrap'));
-        } else {
-            dataActiveOn(jsFiguresWrap);
-            dataActiveOn($('header nav'));
-            dataActiveOn($('.scroll_arrow_wrap'));
-        }
-    }
-
-    function sectionFix(){
-        let sec01 = document.querySelector(".sec01");
-
-        ScrollTrigger.create({
-            trigger: ".sec01",
-            scrub: true,
-            pin: true,
-            start: "top top",
-            end: () => `+=${sec01.offsetHeight}`
-        });
-    }
-
-    function navStart(){
-        let fadeNav = document.querySelectorAll('nav li')
-
-        fadeNav.forEach(function(textanimation,index){
+        titleActive.forEach(function(textanimation,index){
             gsap.to(textanimation,1,{
-                delay:(index + 1) * .15,
+                delay:(index + 1) * .08,
                 opacity:1,
-                y : 0
             })
         })
     }
 
-    function navAction(){
+     // MAIN - SEC01 data active action
+     function sec01Scroll(){
         $(window).scroll(function(){
             var sTop = $(window).scrollTop();
-
-            if(sTop >= 100){
-                dataActiveOn($('header nav'));
-            }
-
+           
             if(sTop >= 200){
-                dataActiveOff($('.figure_mover'));
-                dataActiveOff($('.page_tit'));
-                dataActiveOff($('.page_bg'));
                 dataActiveOff($('.sec01'));
+                dataActiveOff($('.page_bg'));
+                dataActiveOff($('.page_tit'));
+                dataActiveOff($('.figure_mover'));
             }
 
             else{
-                dataActiveOff($('header nav'));
-                dataActiveOn($('.figure_mover'));
-                dataActiveOn($('.page_tit'));
-                dataActiveOn($('.page_bg'));
                 dataActiveOn($('.sec01'));
-            }
-
-            if($('header nav').data('active') != 'on'){
-                let navDataOn = document.querySelectorAll('nav li')
-
-                navDataOn.forEach(function(textanimation,index){
-                    gsap.to(textanimation,1,{
-                        delay:(index + 1) * .15,
-                        y : -100
-                    })
-                })
+                dataActiveOn($('.page_bg'));
+                dataActiveOn($('.page_tit'));
+                dataActiveOn($('.figure_mover'));
             }
         })
     }
 
-    //data active
-    function dataActiveOff(e) {
-        e.attr('data-active', 'off');
+    // MAIN - SEC02 data active action
+    function sec02Scroll(){
+        gsap.timeline({
+            scrollTrigger: {
+                trigger: '.sec01',
+                start: '+=150',
+                endTrigger: '.sec02',
+                markers: false,
+            }
+        })
+        .to(".sec02 .tit_box", { y: 0, opacity: 1 },0.75)
     }
-
-    function dataActiveOn(e) {
-        e.attr('data-active', 'on');
-    }
-
 
 }); // End jQuery
+
+
+
+
+
+
+
+
+
+
+
 
 
 //플러그인 사용 없이 bg_mouseover
@@ -246,4 +275,39 @@ function loop(){
     mx += (x - mx) * speed;
     my += (y - my) * speed;
     window.requestAnimationFrame(loop);
+
 }*/
+
+// init 기본
+
+   /* // only MAIN
+    if ($('body').hasClass('home')) {}
+
+    // only ABOUT US
+    if ($('body').hasClass('about')) {}
+    
+
+    // First load
+    if (typeof loadonce !== 'undefined' && loadonce === true) {
+        // >=2nd load
+    } else {
+        initOnload();
+    }
+
+    $(window).trigger('resize'); */
+
+
+    /* https://agal.tistory.com/213 */
+    /* top bottom 일 때, 첫 번째 값은 애니메이션 요소를 참조 / 두 번째 값은 뷰포트를 참조 */
+    /*function sectionFix(){
+        let sec01 = document.querySelector(".sec01");
+
+        ScrollTrigger.create({
+            trigger: ".sec01",
+            scrub: true,
+            pin: true,
+            start: "top top",
+            end: () => `+=${sec01.offsetHeight}`,
+            markers: true
+        });
+    }*/

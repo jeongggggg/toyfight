@@ -50,6 +50,9 @@ jQuery(function ($) {
 
         // sec02 scroll action
         sec02Scroll();
+
+        // SEC03 ledge background
+        sec03Ledge();
     }
 
 
@@ -151,15 +154,8 @@ jQuery(function ($) {
         });
     }
 
-
-    /* ======================================================================
-    *
-    *  Other Functions
-    * 
-    ====================================================================== */
-
-     // MAIN - background mouseover
-     function mouseMovement(moveAmount) {
+    // MAIN - background mouseover
+    function mouseMovement(moveAmount) {
         $(".sec01").mousemove(function(e) {
 
             let cursorX = e.pageX;
@@ -222,18 +218,39 @@ jQuery(function ($) {
         })
     }
 
-    // MAIN - SEC02 data active action
+    // MAIN - SEC02 title action
     function sec02Scroll(){
-        gsap.timeline({
-            scrollTrigger: {
+       let sec02Tit =  gsap.timeline({
+                scrollTrigger: {
                 trigger: '.sec01',
                 start: '+=150',
                 endTrigger: '.sec02',
                 markers: false,
             }
         })
-        .to(".sec02 .tit_box", { y: 0, opacity: 1 },0.75)
+        sec02Tit.to(".sec02 .tit_box", { y: 0, opacity: 1 },0.75)
+        sec02Tit.to(".line_box .line", {width: "24px",delay: 0.75},1)
+        /* if(!sec02Tit.isActive()){} */
     }
+
+    // MAIN - SEC03 ledge background
+    function sec03Ledge(){
+        var sec03Top = $('.sec02').offset().top;
+        $(window).scroll(function(){
+            var sTop = $(window).scrollTop();
+
+            if(sTop >= sec03Top - 100){
+                dataActiveOn($('.sec03'));
+            }
+
+            else{
+                dataActiveOff($('.sec03'));
+            }
+           
+        })
+    }
+
+
 
 }); // End jQuery
 
@@ -278,25 +295,6 @@ function loop(){
 
 }*/
 
-// init 기본
-
-   /* // only MAIN
-    if ($('body').hasClass('home')) {}
-
-    // only ABOUT US
-    if ($('body').hasClass('about')) {}
-    
-
-    // First load
-    if (typeof loadonce !== 'undefined' && loadonce === true) {
-        // >=2nd load
-    } else {
-        initOnload();
-    }
-
-    $(window).trigger('resize'); */
-
-
     /* https://agal.tistory.com/213 */
     /* top bottom 일 때, 첫 번째 값은 애니메이션 요소를 참조 / 두 번째 값은 뷰포트를 참조 */
     /*function sectionFix(){
@@ -311,3 +309,21 @@ function loop(){
             markers: true
         });
     }*/
+
+
+       /* // only MAIN
+            if ($('body').hasClass('home')) {}
+
+            // only ABOUT US
+            if ($('body').hasClass('about')) {}
+            
+
+            // First load
+            if (typeof loadonce !== 'undefined' && loadonce === true) {
+                // >=2nd load
+            } else {
+                initOnload();
+            }
+
+            $(window).trigger('resize');
+        */

@@ -48,6 +48,10 @@ a{
     display: inline-block;
 }
 
+img{
+    width: 100%;
+}
+
 .ginger{
     font-family: 'Ginger', sans-serif, serif;
 }
@@ -603,4 +607,25 @@ footer{
     width: 660px;
     height: 330px;
     margin: -165px 0 0 -330px;
+}
+
+.footer_rock{
+    width: 175px;
+    height: 450px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transition: 0.95s cubic-bezier(1, 0, 0, 1);
+}
+
+.footer_rock img{
+    width: 100%;
+}
+
+footer[data-active="off"] .footer_rock{
+    transform: translate(-50%, 100%);
+}
+
+footer[data-active="on"] .footer_rock{
+    transform: translate(-50%, 0);
 }

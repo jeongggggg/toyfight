@@ -53,6 +53,9 @@ jQuery(function ($) {
 
         // SEC03 ledge background
         sec03Ledge();
+
+        //footer rock action
+        footerRock();
     }
 
 
@@ -248,6 +251,18 @@ jQuery(function ($) {
             }
            
         })
+    }
+
+    //footer action
+    function footerRock(){
+        $(window).scroll(function() {
+            var scrollTop = $(window).scrollTop();
+            var innerHeight = $(window).height();
+            var scrollHeight = $(document).height();
+            if (scrollTop + innerHeight >= scrollHeight) {
+              dataActiveOn($('footer'));
+            }
+        });
     }
 
 

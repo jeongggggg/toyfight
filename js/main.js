@@ -75,24 +75,6 @@ jQuery(function ($) {
 
     $(window).on('load', initOnload);
 
-    ScrollSmoother.create({
-        smooth: 1,               // how long (in seconds) it takes to "catch up" to the native scroll position
-        effects: true,           // looks for data-speed and data-lag attributes on elements
-        smoothTouch: 0.1,        // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
-      });
-
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-    ScrollTrigger.normalizeScroll(true)
-
-    // create the smooth scroller FIRST!
-    let smoother = ScrollSmoother.create({
-        smooth: 2,
-        effects: true,
-    });
-
-    smoother.scrollTo(".smooth-content", true, "center center");
-
 
     /* ======================================================================
      *
@@ -124,6 +106,33 @@ jQuery(function ($) {
     ====================================================================== */
 
 
+    /* -------------- DATA ACTION -------------- */
+
+    function dataActiveOff(e) {
+        e.attr('data-active', 'off');
+    }
+
+    function dataActiveOn(e) {
+        e.attr('data-active', 'on');
+    }
+
+    /* -------------- SIZE INIT -------------- */
+
+    // height 100%
+    function sizeHandler() {
+        windowWidth = $(window).innerWidth();
+        windowHeight = $(window).innerHeight();
+        halfWindowWidth = windowWidth / 2;
+        halfWindowHeight = windowHeight / 2;
+    
+        $('.js-full-height').each(function() {
+              $(this).css({
+                'height' : windowHeight
+            });
+        });
+    }
+
+
     /* -------------- NAV ACTION -------------- */
 
     function navStart(){
@@ -148,34 +157,25 @@ jQuery(function ($) {
             })
         })
     }
+
     
+    /* -------------- FOOTER -------------- */
 
-    /* -------------- DATA ACTION -------------- */
-
-    function dataActiveOff(e) {
-        e.attr('data-active', 'off');
-    }
-
-    function dataActiveOn(e) {
-        e.attr('data-active', 'on');
-    }
-
-    /* -------------- SIZE INIT -------------- */
-
-    function sizeHandler() {
-        windowWidth = $(window).innerWidth();
-        windowHeight = $(window).innerHeight();
-        halfWindowWidth = windowWidth / 2;
-        halfWindowHeight = windowHeight / 2;
-    
-        $('.js-full-height').each(function() {
-              $(this).css({
-                'height' : windowHeight
-            });
+    // rock action
+    function footerRock(){
+        $(window).scroll(function() {
+            var scrollTop = $(window).scrollTop();
+            var innerHeight = $(window).height();
+            var scrollHeight = $(document).height();
+            if (scrollTop + innerHeight >= scrollHeight) {
+              dataActiveOn($('footer'));
+            }
         });
     }
 
-    // MAIN - background mouseover
+     /* -------------- MAIN -------------- */
+
+    // SEC01 - background mouseover
     function mouseMovement(moveAmount) {
         $(".sec01").mousemove(function(e) {
 
@@ -206,7 +206,7 @@ jQuery(function ($) {
         });
     }
 
-    // MAIN - title opacity
+    // SEC01 - title opacity
     function titleActive(){
         let titleActive = document.querySelectorAll('.tit span')
 
@@ -218,7 +218,7 @@ jQuery(function ($) {
         })
     }
 
-     // MAIN - SEC01 data active action
+     // SEC01 - data active action
      function sec01Scroll(){
         $(window).scroll(function(){
             var sTop = $(window).scrollTop();
@@ -239,7 +239,7 @@ jQuery(function ($) {
         })
     }
 
-    // MAIN - SEC02 title action
+    // SEC02 - title action
     function sec02Scroll(){
        let sec02Tit =  gsap.timeline({
                 scrollTrigger: {
@@ -254,7 +254,7 @@ jQuery(function ($) {
         /* if(!sec02Tit.isActive()){} */
     }
 
-    // MAIN - SEC03 ledge background
+    // SEC03 - ledge background
     function sec03Ledge(){
         var sec03Top = $('.sec02').offset().top;
         $(window).scroll(function(){
@@ -270,20 +270,6 @@ jQuery(function ($) {
            
         })
     }
-
-    //footer action
-    function footerRock(){
-        $(window).scroll(function() {
-            var scrollTop = $(window).scrollTop();
-            var innerHeight = $(window).height();
-            var scrollHeight = $(document).height();
-            if (scrollTop + innerHeight >= scrollHeight) {
-              dataActiveOn($('footer'));
-            }
-        });
-    }
-
-
 
 }); // End jQuery
 

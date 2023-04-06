@@ -27,7 +27,7 @@ jQuery(function ($) {
     function init(loadonce) {
 
          // nav action
-         $(window).scroll(function(){
+        $(window).scroll(function(){
             var sTop = $(window).scrollTop();
     
             if(sTop >= 200){
@@ -74,6 +74,24 @@ jQuery(function ($) {
     }
 
     $(window).on('load', initOnload);
+
+    ScrollSmoother.create({
+        smooth: 1,               // how long (in seconds) it takes to "catch up" to the native scroll position
+        effects: true,           // looks for data-speed and data-lag attributes on elements
+        smoothTouch: 0.1,        // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
+      });
+
+    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+    ScrollTrigger.normalizeScroll(true)
+
+    // create the smooth scroller FIRST!
+    let smoother = ScrollSmoother.create({
+        smooth: 2,
+        effects: true,
+    });
+
+    smoother.scrollTo(".smooth-content", true, "center center");
 
 
     /* ======================================================================
@@ -268,6 +286,20 @@ jQuery(function ($) {
 
 
 }); // End jQuery
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
